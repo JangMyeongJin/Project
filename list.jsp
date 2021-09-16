@@ -242,7 +242,7 @@ try{
 	int startNum = (curPage-1) * viewPages;
 %>
     <div class="container">
-    	<div class="row justify-content-center">
+    	<div class="row justify-content-center" style="width:100%">
                         <div class="col-12 col-md-10 col-lg-8">
                         <h1 class="h2 mb-3 font-weight-normal"><a href="list.jsp">Pharmacy Helper</a></h1>
                             <form class="card card-sm" id="searchForm" method="get" action="list.jsp" >
@@ -342,13 +342,14 @@ try{
 					<label><input type="checkbox" name="search_russian" id="search_language" value="러시아어" <%if(search_russian.equals("러시아어")){out.println("checked");} %> onclick="checkSelectAll()">러시아어</label>
 				</div>
                             	<input type="hidden" name="curpage" id="curpage">
-                                <div class="card-body row no-gutters">
-                                    <div class="col">
+                                <div class="card-body row no-gutters" style="width:900px"> <!-- style="width:900px" -->
+                                    <div>
                                     	<label for="search_name" class="sr-only">Search</label>
-                                        <input class="form-control form-control-lg form-control-borderless" type="search" id="search_name"  name="search_name" placeholder="약국명을 입력하세요." style="display: inline-block;width:80%;margin-bottom:15px;margin-left:15px;" value="<%=search_name%>"> 
+                                        <input class="form-control form-control-lg form-control-borderless" type="search" id="search_name"  name="search_name" placeholder="약국명을 입력하세요." style="display: inline-block;width:60%;margin-bottom:15px;margin-left:15px;" value="<%=search_name%>"> 
                                         <button class="btn btn-lg btn-success" id="btn_submit">검색</button>
+                                        <label><input type="radio" name="align" value="align_name" checked style="margin-left:10px">이름순 정렬</label>
+                                        <label><input type="radio" name="align" value="align_address">주소순 정렬</label>
                                     </div>
-                                     
                                 </div>
                             </form>
                         </div>
@@ -365,7 +366,7 @@ if(totalCount > 0){
     
     query = "select * from seoul_pharmacy "+where;
 
-    query += " limit "+2;//+startNum+","+viewPages;
+    query += " limit "+1;//+startNum+","+viewPages;
     rs = stmt.executeQuery(query);
     
     int idx = 0;
@@ -453,7 +454,7 @@ if(totalCount > 0){
     </td>
     
     <td style="width:40%">
-    <div id="map<%=idx%>" style="width:100%;height:280px"></div>
+    <!--  <div id="map<%=idx%>" style="width:100%;height:280px"></div>
 	<script>
 	var mapOptions = {
    	 	zoom: 16,
@@ -476,7 +477,7 @@ if(totalCount > 0){
 	    position: new naver.maps.LatLng(<%=rs.getString("x_location") %>, <%=rs.getString("y_location") %>),
 	    map: map
 	});
-	</script>
+	</script> -->
 
     </td>
     </tr>

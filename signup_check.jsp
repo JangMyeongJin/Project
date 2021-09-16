@@ -18,7 +18,6 @@ String id = request.getParameter("id");
 String pw = request.getParameter("pw");
 String name = request.getParameter("name");
 
-System.out.println(name);
 %>
 <%
 Connection conn = null;
