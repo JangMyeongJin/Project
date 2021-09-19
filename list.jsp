@@ -102,6 +102,8 @@ String search_french = request.getParameter("search_french");
 String search_russian = request.getParameter("search_russian");
 String search_spanish = request.getParameter("search_spanish");
 String search_all = request.getParameter("search_all");
+String align = request.getParameter("align");
+
 
 String gu[] = {"강남구","강동구","강북구","강서구","관악구","광진구","구로구","금천구","노원구","도봉구","동대문구","동작구","마포구","서대문구","서초구","성동구","성북구","송파구","양천구","영등포구","용산구","은평구","종로구","중구","중랑구"};
 
@@ -148,6 +150,9 @@ if(search_russian==null){
 
 if(search_all==null){
 	search_all = "";
+}
+if(align==null){
+	align = "name";
 }
 
 int viewPages = 10;
@@ -347,8 +352,9 @@ try{
                                     	<label for="search_name" class="sr-only">Search</label>
                                         <input class="form-control form-control-lg form-control-borderless" type="search" id="search_name"  name="search_name" placeholder="약국명을 입력하세요." style="display: inline-block;width:60%;margin-bottom:15px;margin-left:15px;" value="<%=search_name%>"> 
                                         <button class="btn btn-lg btn-success" id="btn_submit">검색</button>
-                                        <label><input type="radio" name="align" value="align_name" checked style="margin-left:10px">이름순 정렬</label>
-                                        <label><input type="radio" name="align" value="align_address">주소순 정렬</label>
+                                        <%=align %>
+                                        <label><input type="radio" name="align" value="name" style="margin-left:10px" <%if(align.equals("name")){out.println("checked");} %>>이름순 정렬</label>
+                                        <label><input type="radio" name="align" value="address" <%if(align.equals("address")){out.println("checked");} %>>주소순 정렬</label>
                                     </div>
                                 </div>
                             </form>
