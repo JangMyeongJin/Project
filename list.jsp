@@ -352,7 +352,7 @@ try{
                                     	<label for="search_name" class="sr-only">Search</label>
                                         <input class="form-control form-control-lg form-control-borderless" type="search" id="search_name"  name="search_name" placeholder="약국명을 입력하세요." style="display: inline-block;width:60%;margin-bottom:15px;margin-left:15px;" value="<%=search_name%>"> 
                                         <button class="btn btn-lg btn-success" id="btn_submit">검색</button>
-                                        <%=align %>
+                                        
                                         <label><input type="radio" name="align" value="name" style="margin-left:10px" <%if(align.equals("name")){out.println("checked");} %>>이름순 정렬</label>
                                         <label><input type="radio" name="align" value="address" <%if(align.equals("address")){out.println("checked");} %>>주소순 정렬</label>
                                     </div>
@@ -370,11 +370,12 @@ try{
 if(totalCount > 0){
     stmt = conn.createStatement();
     
-    query = "select * from seoul_pharmacy "+where;
+    query = "select * from seoul_pharmacy " +where+ "order by " +align;
 
-    query += " limit "+1;//+startNum+","+viewPages;
+    query += " limit "+10;//+startNum+","+viewPages;
     rs = stmt.executeQuery(query);
     
+    System.out.println(query);
     int idx = 0;
     while(rs.next()) {
     	idx++;

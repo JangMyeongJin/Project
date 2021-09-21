@@ -63,9 +63,9 @@ if(count==1 && id.equals("admin")){
 %>
 	<script>
 	 alert("아이디또는 비밀번호가 틀립니다.");
+	 location.href = "login.html";
 	</script>
 <%
-	response.sendRedirect("/project/jsp/login.html");
 	
 }
 %>
