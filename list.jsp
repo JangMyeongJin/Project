@@ -34,7 +34,10 @@
      function showMap(){
     	var x_location = $('#x_location').val();
     	var y_location = $('#y_location').val();
-     	window.open("show_map.jsp"+"?x_location="+x_location+"&y_location="+y_location ,"a","width:300px;height:300px;");
+    	var url = "show_map.jsp"+"?x_location="+x_location+"&y_location="+y_location;
+    	var name = "map";
+    	var option = "width=600, height=400, top = 100, left = 300";
+     	window.open(url,name,option);
      }
      
      $(function(){
@@ -61,6 +64,13 @@
     		 $('input[id="search_all"]').prop('checked',false);
     	 }
      }
+     function admin_insert(){
+    	var url = "admin_insert.jsp"
+     	var name = "admin_insert";
+     	var option = "";
+
+      	window.open(url,name,option);
+      }
     </script>
 </head>
 
@@ -359,7 +369,7 @@ try{
                                         <label><input type="radio" name="align" value="name" style="margin-left:10px" <%if(align.equals("name")){out.println("checked");} %>>이름순 정렬</label>
                                         <label><input type="radio" name="align" value="address" <%if(align.equals("address")){out.println("checked");} %>>주소순 정렬</label>
                                     	<%if(project_session.equals("admin")){ %>
-                                    		<button id="info_input" style="margin-left:200px">추가정보 입력</button>
+                                    		<button onclick="admin_insert()" style="margin-left:200px">추가정보 입력</button>
                                     	<%} %>
                                     </div>
                                 </div>
@@ -471,7 +481,7 @@ if(totalCount > 0){
     </td>
     
     <td style="width:40%">
-    <!--  <div id="map<%=idx%>" style="width:100%;height:280px"></div>
+    <!-- <div id="map<%=idx%>" style="width:100%;height:280px"></div>
 	<script>
 	var mapOptions = {
    	 	zoom: 16,
@@ -494,7 +504,7 @@ if(totalCount > 0){
 	    position: new naver.maps.LatLng(<%=rs.getString("x_location") %>, <%=rs.getString("y_location") %>),
 	    map: map
 	});
-	</script> -->
+	</script>-->
 
     </td>
     </tr>

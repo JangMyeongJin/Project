@@ -13,9 +13,9 @@
 <%
 //세션받기
 try{
-	int i_session = (Integer)session.getAttribute("project");
+	String project_session = (String)session.getAttribute("project");
 
-	if(i_session!=0000){
+	if(project_session==null){
 %>
 		<script>
 		alert("로그인 후 이용가능합니다.");

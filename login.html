@@ -15,15 +15,15 @@
        <script type="text/javascript">
       $(function(){
         $('#btn_submit').click(function(){
-        var jb = $( '#id' ).val();
-         if(jb==""){
+        var id = $( '#id' ).val();
+         if(id==""){
         	 alert("아이디를 입력하세요.");
         	 $( '#id' ).focus();
         	 return;
          }
          
-         var pd = $( '#pw' ).val();
-         if(pd==""){
+         var pw = $( '#pw' ).val();
+         if(pw==""){
         	 alert("비밀번호를 입력하세요.");
         	 $( '#pw' ).focus();
         	 return;
