@@ -11,7 +11,6 @@
     <link href="/project/css/list.css" rel="stylesheet">
    
     <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=webr3htmdq"></script>
-    <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=webr3htmdq"></script>
     <script src="/project/bootstrap/js/jquery.min.js"></script>
     <script type="text/javascript">
      function goPage(page){
@@ -69,9 +68,9 @@
 <%
 //세션받기
 try{
-	int i_session = (Integer)session.getAttribute("project");
+	String project_session = (String)session.getAttribute("project");
 
-	if(i_session!=0000){
+	if(project_session==null){
 %>
 		<script>
 		alert("로그인 후 이용가능합니다.");
@@ -103,7 +102,8 @@ String search_russian = request.getParameter("search_russian");
 String search_spanish = request.getParameter("search_spanish");
 String search_all = request.getParameter("search_all");
 String align = request.getParameter("align");
-
+String id = request.getParameter("id");
+String project_session = (String)session.getAttribute("project");
 
 String gu[] = {"강남구","강동구","강북구","강서구","관악구","광진구","구로구","금천구","노원구","도봉구","동대문구","동작구","마포구","서대문구","서초구","성동구","성북구","송파구","양천구","영등포구","용산구","은평구","종로구","중구","중랑구"};
 
@@ -153,6 +153,9 @@ if(search_all==null){
 }
 if(align==null){
 	align = "name";
+}
+if(id==null){
+	id = "";
 }
 
 int viewPages = 10;
@@ -347,14 +350,17 @@ try{
 					<label><input type="checkbox" name="search_russian" id="search_language" value="러시아어" <%if(search_russian.equals("러시아어")){out.println("checked");} %> onclick="checkSelectAll()">러시아어</label>
 				</div>
                             	<input type="hidden" name="curpage" id="curpage">
-                                <div class="card-body row no-gutters" style="width:900px"> <!-- style="width:900px" -->
+                                <div class="card-body row no-gutters" style="width:1200px"> <!-- style="width:900px" -->
                                     <div>
                                     	<label for="search_name" class="sr-only">Search</label>
-                                        <input class="form-control form-control-lg form-control-borderless" type="search" id="search_name"  name="search_name" placeholder="약국명을 입력하세요." style="display: inline-block;width:60%;margin-bottom:15px;margin-left:15px;" value="<%=search_name%>"> 
+                                        <input class="form-control form-control-lg form-control-borderless" type="search" id="search_name"  name="search_name" placeholder="약국명을 입력하세요." style="display: inline-block;width:550px;margin-bottom:15px;margin-left:15px;" value="<%=search_name%>"> 
                                         <button class="btn btn-lg btn-success" id="btn_submit">검색</button>
                                         
                                         <label><input type="radio" name="align" value="name" style="margin-left:10px" <%if(align.equals("name")){out.println("checked");} %>>이름순 정렬</label>
                                         <label><input type="radio" name="align" value="address" <%if(align.equals("address")){out.println("checked");} %>>주소순 정렬</label>
+                                    	<%if(project_session.equals("admin")){ %>
+                                    		<button id="info_input" style="margin-left:200px">추가정보 입력</button>
+                                    	<%} %>
                                     </div>
                                 </div>
                             </form>
@@ -372,10 +378,9 @@ if(totalCount > 0){
     
     query = "select * from seoul_pharmacy " +where+ "order by " +align;
 
-    query += " limit "+10;//+startNum+","+viewPages;
+    query += " limit "+1;//+startNum+","+viewPages;
     rs = stmt.executeQuery(query);
     
-    System.out.println(query);
     int idx = 0;
     while(rs.next()) {
     	idx++;
@@ -456,6 +461,11 @@ if(totalCount > 0){
     	<tr>
     		<td>목요일</td><td><%=rs.getString("opti_thu") %></td><td>금요일</td><td><%=rs.getString("opti_fri") %></td><td>토요일</td><td><%=rs.getString("opti_sat") %></td><td>일요일</td><td><%=rs.getString("opti_sun") %></td>
     	</tr>
+    	<%if(project_session.equals("admin")){ %>
+    	<tr>
+    		<td></td><td></td><td></td><td></td><td></td><td></td><td></td><td> <button id="info_input">정보 수정</button> </td>
+    	</tr>
+    	<%} %>
     </table>
     
     </td>
@@ -566,7 +576,7 @@ finally {
 </nav>
 </div>
 </div>
-  </body>
+</body>
 <script>
 //selectChange($('#search_gu'));
 $('#search_gu').trigger('change');

@@ -50,24 +50,23 @@ finally {
      
          if(conn != null) try {conn.close();} catch(SQLException ex){}
  		}
-
 %>
 <%
 if(count==1 && id.equals("admin")){
-	session.setAttribute("project", 0000);
-	response.sendRedirect("/project/jsp/list_admin.jsp");
-}else if(count==1){
-	session.setAttribute("project", 0000);
+	session.setAttribute("project", "admin");
 	response.sendRedirect("/project/jsp/list.jsp");
-}else {
+}else if(count==1) {
+	session.setAttribute("project", "user");
+	response.sendRedirect("/project/jsp/list.jsp");
+}else{
 %>
 	<script>
 	 alert("아이디또는 비밀번호가 틀립니다.");
 	 location.href = "login.html";
 	</script>
 <%
-	
 }
 %>
+
 </body>
 </html>
