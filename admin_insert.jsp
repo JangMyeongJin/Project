@@ -119,7 +119,7 @@ try{
     
     conn.commit();
     
-	while(rs.next()) {
+	rs.next(); {
 		String unique_num;
 		unique_num = rs.getString("unique_num");
 		

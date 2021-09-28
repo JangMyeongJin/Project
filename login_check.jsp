@@ -7,8 +7,6 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>login_check</title>
-	<link href="/project/bootstrap/css/bootstrap.css" rel="stylesheet">
-	<link href="/project/css/login.css" rel="stylesheet">
 </head>
 <body>
 <%

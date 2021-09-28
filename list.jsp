@@ -17,20 +17,7 @@
     	 $( '#curpage' ).val(page);
     	 document.getElementById('searchForm').submit();
      }
-     
-     $(function(){
-     	$('#btn_submit').click(function(){
-	     	var search_gu = $( '#search_gu' ).val();
-	     	var search_language = $( '#search_language' ).val();
-	      	if(search_gu=="none" && search_language == null){
-	     	 	alert("해당구를 선택하세요.");
-	     	 	$( '#search_gu' ).focus();
-	     	 	return;
-	      	}
-	      	document.getElementById('formSearch').submit();
-     	});
-     	
- 	}); 	 
+     	 
      function showMap(){
     	var x_location = $('#x_location').val();
     	var y_location = $('#y_location').val();
@@ -64,32 +51,29 @@
     		 $('input[id="search_all"]').prop('checked',false);
     	 }
      }
+     
      function admin_insert(){
     	var url = "admin_insert.jsp"
      	var url_name = "admin_insert";
      	var option = "width=1200, height=800";
-
+     	
       	window.open(url,url_name,option);
       }
-     function admin_update(){
+     
+      function admin_update(){
      	var url = "admin_update.jsp"
       	var url_name = "admin_update";
       	var option = "width=1200, height=800";
-      	var name = $('#name').val();
-    	var phone = $('#phone').val();
-    	var address = $('#address').val();
-    	var language = $('#language').val();
-    	var opti_mon = $('#opti_mon').val();
-    	var opti_tue = $('#opti_tue').val();
-    	var opti_wed = $('#opti_wed').val();
-    	var opti_thu = $('#opti_thu').val();
-    	var opti_fri = $('#opti_fri').val();
-    	var opti_sat = $('#opti_sat').val();
-    	var opti_sun = $('#opti_sun').val();
-      	var x_location = $('#x_location').val();
-    	var y_location = $('#y_location').val();
+      	var unique_num = $('#unique_num').val();
 
-       	window.open(url+"?name="+name+"&phone="+phone+"&address="+address+"&language="+language+"&opti_mon="+opti_mon+"&opti_tue="+opti_tue+"&opti_wed="+opti_wed+"&opti_thu="+opti_thu+"&opti_fri="+opti_fri+"&opti_sat="+opti_sat+"&opti_sun="+opti_sun+"&x_location="+x_location+"&y_location="+y_location,url_name,option);
+       	window.open(url+"?unique_num="+unique_num,url_name,option);
+       }
+      
+      function admin_delete(){
+       	var unique_num = $('#unique_num').val();
+
+        alert("해당 정보를 삭제하겠습니까?.");
+       	location.href = "admin_delete.jsp?unique_num="+unique_num;
        }
     </script>
 </head>
@@ -408,7 +392,7 @@ if(totalCount > 0){
     
     query = "select * from seoul_pharmacy " +where+ "order by " +align;
 
-    query += " limit "+1;//+startNum+","+viewPages;
+    query += " limit "+startNum+","+viewPages;
     rs = stmt.executeQuery(query);
     
     int idx = 0;
@@ -493,14 +477,17 @@ if(totalCount > 0){
     <%if(project_session.equals("admin")){ %>
     <table style="float:right">
     	<tr>
-    		<td style="width:100px"><button onclick="admin_update()">정보 수정</button></td><td><button id="info_input">정보 삭제</button></td>
+    		<td style="width:100px"><button onclick="admin_update()">정보 수정</button></td><td><button onclick="admin_delete()">삭제</button></td>
     	</tr>
     </table>
+  	<input type="hidden" id="unique_num" value=<%=rs.getString("unique_num")%>>
+  	<input type="hidden" id="x_location" value=<%=rs.getString("x_location")%>>
+  	<input type="hidden" id="y_location" value=<%=rs.getString("y_location")%>>
     <%} %>
     </td>
     
     <td style="width:40%">
-    <!-- <div id="map<%=idx%>" style="width:100%;height:280px"></div>
+    <div id="map<%=idx%>" style="width:100%;height:280px"></div>
 	<script>
 	var mapOptions = {
    	 	zoom: 16,
@@ -523,26 +510,13 @@ if(totalCount > 0){
 	    position: new naver.maps.LatLng(<%=rs.getString("x_location") %>, <%=rs.getString("y_location") %>),
 	    map: map
 	});
-	</script>-->
+	</script>
 
     </td>
     </tr>
   </table>
   
   </ul>
-  <input type="hidden" name="name" id="name" value=<%=rs.getString("name")%>>
-  <input type="hidden" name="phone" id="phone" value=<%=rs.getString("phone")%>>
-  <input type="hidden" name="address" id="address" value=<%=rs.getString("address")%>>
-  <input type="hidden" name="language" id="lagnuage" value=<%=rs.getString("language")%>>
-  <input type="hidden" name="opti_mon" id="opti_mon" value=<%=rs.getString("opti_mon")%>>
-  <input type="hidden" name="opti_tue" id="opti_tue" value=<%=rs.getString("opti_tue")%>>
-  <input type="hidden" name="opti_wed" id="opti_wed" value=<%=rs.getString("opti_wed")%>>
-  <input type="hidden" name="opti_thu" id="opti_thu" value=<%=rs.getString("opti_thu")%>>
-  <input type="hidden" name="opti_fri" id="opti_fri" value=<%=rs.getString("opti_fri")%>>
-  <input type="hidden" name="opti_sat" id="opti_sat" value=<%=rs.getString("opti_sat")%>>
-  <input type="hidden" name="opti_sun" id="opti_sun" value=<%=rs.getString("opti_sun")%>>
-  <input type="hidden" name="x_location" id="x_location" value=<%=rs.getString("x_location")%>>
-  <input type="hidden" name="y_location" id="y_location" value=<%=rs.getString("y_location")%>>
 <%
     }
 }else{
