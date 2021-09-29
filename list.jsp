@@ -59,22 +59,6 @@
      	
       	window.open(url,url_name,option);
       }
-     
-      function admin_update(){
-     	var url = "admin_update.jsp"
-      	var url_name = "admin_update";
-      	var option = "width=1200, height=800";
-      	var unique_num = $('#unique_num').val();
-
-       	window.open(url+"?unique_num="+unique_num,url_name,option);
-       }
-      
-      function admin_delete(){
-       	var unique_num = $('#unique_num').val();
-
-        alert("해당 정보를 삭제하겠습니까?.");
-       	location.href = "admin_delete.jsp?unique_num="+unique_num;
-       }
     </script>
 </head>
 
@@ -104,6 +88,7 @@ try{
 <%
 request.setCharacterEncoding("utf-8");
 
+String unique_num = request.getParameter("unique_num");
 String search_name = request.getParameter("search_name");
 String search_gu = request.getParameter("search_gu");
 String search_dong = request.getParameter("search_dong");
@@ -364,7 +349,7 @@ try{
 					<label><input type="checkbox" name="search_russian" id="search_language" value="러시아어" <%if(search_russian.equals("러시아어")){out.println("checked");} %> onclick="checkSelectAll()">러시아어</label>
 				</div>
                             	<input type="hidden" name="curpage" id="curpage">
-                                <div class="card-body row no-gutters" style="width:1200px"> <!-- style="width:900px" -->
+                                <div class="card-body row no-gutters" style="width:1200px">
                                     <div>
                                     	<label for="search_name" class="sr-only">Search</label>
                                         <input class="form-control form-control-lg form-control-borderless" type="search" id="search_name"  name="search_name" placeholder="약국명을 입력하세요." style="display: inline-block;width:550px;margin-bottom:15px;margin-left:15px;" value="<%=search_name%>"> 
@@ -415,7 +400,7 @@ if(totalCount > 0){
     		<td><%=rs.getString("phone") %></td>
     	</tr>
     	<tr>
-    		<td><%=rs.getString("address") %> <button onclick="showMap()">지도보기</button></td>
+    		<td><%=rs.getString("address") %> <a href="show_map.jsp?x_location=<%=rs.getString("x_location")%>&y_location=<%=rs.getString("y_location") %>" target="_black"><button>지도보기</button></a></td>
     	</tr>
     </table>
     	<table class="table" style="width:100%;background-color:transparent;">
@@ -477,12 +462,9 @@ if(totalCount > 0){
     <%if(project_session.equals("admin")){ %>
     <table style="float:right">
     	<tr>
-    		<td style="width:100px"><button onclick="admin_update()">정보 수정</button></td><td><button onclick="admin_delete()">삭제</button></td>
+    		<td style="width:100px"><a href="admin_update.jsp?unique_num=<%=rs.getString("unique_num") %>" target="_blank"><button>정보 수정</button></a></td><td><a href="admin_delete.jsp?unique_num=<%=rs.getString("unique_num") %>"><button>삭제</button></a></td>
     	</tr>
     </table>
-  	<input type="hidden" id="unique_num" value=<%=rs.getString("unique_num")%>>
-  	<input type="hidden" id="x_location" value=<%=rs.getString("x_location")%>>
-  	<input type="hidden" id="y_location" value=<%=rs.getString("y_location")%>>
     <%} %>
     </td>
     
@@ -529,7 +511,6 @@ if(totalCount > 0){
 </ul>
 <%
 }
-
 } 
 catch(SQLException e) {
      out.println(e.getMessage() );

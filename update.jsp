@@ -75,6 +75,6 @@ finally {
 </body>
 <script>
 alert("정보가 수정되었습니다.");
-self.close();
+location.href="list.jsp"
 </script>
 </html>
