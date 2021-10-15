@@ -52,10 +52,10 @@ finally {
 <%
 if(count==1 && id.equals("admin")){
 	session.setAttribute("project", "admin");
-	response.sendRedirect("/project/jsp/list.jsp");
+	response.sendRedirect("/project/jsp/select.jsp");
 }else if(count==1) {
 	session.setAttribute("project", "user");
-	response.sendRedirect("/project/jsp/list.jsp");
+	response.sendRedirect("/project/jsp/select.jsp");
 }else{
 %>
 	<script>

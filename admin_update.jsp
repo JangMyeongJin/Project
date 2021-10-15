@@ -40,7 +40,7 @@ try{
     rs.next(); {
 %>
 <div class="container">
-<h1 class="h2 mb-3 font-weight-normal">정보 수정</a></h1>
+<h1 class="h2 mb-3 font-weight-normal">정보 수정</h1>
 <ul class="list-group" style="pading:10px;padding-top: 5px;padding-right: 10px;padding-left: 10px;">
 <form action="update.jsp">
 <input type="hidden" name="unique_num" value="<%=unique_num%>">
